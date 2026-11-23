@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NEOUL Collection 01</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: product photos sit on the same paper tone as the page, so the
+   fabric is the only colour. Ink type, hairlines, wide tracking, no cards. */
+:root{
+  color-scheme: light;
+  --paper:#FFFFFF;
+  --tile:#F3F1ED;       /* matches the flat product photo background */
+  --panel:#E8E5DF;      /* editorial panels behind worn shots */
+  --ink:#191816;
+  --ink-2:#6B6862;      /* secondary text */
+  --line:#D6D2CA;       /* hairlines */
+  --service:#D7F36B;    /* Modestry On accent, used only in the Try On area */
+  --font: "Albert Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --gut: clamp(16px, 4vw, 48px);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--font);font-weight:400;font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.cap{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:500}
+.muted{color:var(--ink-2)}
+
+/* announcement + header */
+.bar{background:var(--ink);color:var(--paper);text-align:center;padding:8px var(--gut)}
+header{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--line)}
+.head{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:18px var(--gut);flex-wrap:wrap}
+.mark{font-size:24px;font-weight:500;letter-spacing:.42em;margin-right:-.42em;line-height:1}
+.e3{--t:.098em;display:inline-block;width:.5em;height:.7em;margin-right:.42em;background:linear-gradient(180deg,currentColor 0 var(--t),transparent var(--t) calc(50% - var(--t)/2),currentColor calc(50% - var(--t)/2) calc(50% + var(--t)/2),transparent calc(50% + var(--t)/2) calc(100% - var(--t)),currentColor calc(100% - var(--t)))}
+.story .ko .e3,.banner .e3{--t:.098em}
+.head .side{display:flex;gap:20px;align-items:center}
+.head .side.r{justify-content:flex-end}
+nav{display:flex;align-items:center;gap:clamp(14px,2.6vw,34px);flex-wrap:wrap}
+nav a{padding:4px 0;border-bottom:1px solid transparent}
+nav a[aria-current="page"]{border-bottom-color:var(--ink)}
+nav a.svc::after{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--service);margin-left:6px;vertical-align:middle;border:1px solid var(--ink)}
+
+main{min-height:60vh}
+.wrap{padding:0 var(--gut)}
+section{padding:clamp(40px,7vw,88px) 0}
+h1,h2,h3{font-weight:300;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1{font-size:clamp(38px,7vw,84px);line-height:1.02}
+h2{font-size:clamp(26px,3.6vw,44px);line-height:1.1}
+h3{font-size:20px;font-weight:400}
+p{margin:0;max-width:62ch}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:0;border-bottom:1px solid var(--line)}
+.hero .txt{padding:clamp(32px,6vw,80px) var(--gut);display:flex;flex-direction:column;justify-content:space-between;gap:40px}
+.hero .txt .stack{display:flex;flex-direction:column;gap:20px}
+.hero .pic{background:var(--panel);display:grid;grid-template-columns:1fr 1fr;align-items:end;padding:24px 12px 0;min-height:420px}
+.hero .pic img{width:100%;height:auto}
+.hero .pic img:first-child{transform:translateY(0)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:48px;padding:0 26px;border:1px solid var(--ink);background:var(--ink);color:var(--paper)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn[disabled]{opacity:.45;cursor:default}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+
+/* banner */
+.banner{position:relative;margin:var(--gut);margin-top:clamp(12px,2vw,24px);overflow:hidden;background:var(--panel)}
+.banner{aspect-ratio:1792/768}
+.banner .slide{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .5s}
+.banner .slide.on{opacity:1;pointer-events:auto}
+.banner img{width:100%;height:100%;object-fit:cover}
+.arr{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.9);color:var(--ink);font-size:18px;z-index:2}
+.arr.l{left:12px}.arr.r{right:12px}
+.dots{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:8px;z-index:2}
+.dots button{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.5)}
+.dots button[aria-current="true"]{background:#fff}
+.tp{display:flex;flex-direction:column;gap:10px}
+.tp .sil{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+.tp .btn{height:56px;width:100%}
+.trybtn{flex-direction:column;gap:3px;background:#fff;color:var(--ink)}
+.trybtn .cap{font-size:12px;font-weight:600}
+.mo{font-size:12px;color:var(--ink-2);display:inline-flex;align-items:center;gap:5px}
+.mo .molog{height:16px;width:auto;display:block}
+.mo b{font-weight:600;color:var(--ink);letter-spacing:-.01em;font-size:13.5px;display:inline-flex;align-items:center}
+.mo .o{display:inline-block;width:.78em;height:.78em;border:.17em solid currentColor;border-radius:50%;margin:0 .05em 0 .22em;position:relative;top:.02em}
+.pg{position:relative;min-width:0}
+.pg .track{display:flex;gap:2px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.pg .track::-webkit-scrollbar{display:none}
+.pg figure{margin:0;flex:0 0 100%;aspect-ratio:3/4;scroll-snap-align:start;background:var(--tile)}
+.pg figure img{width:100%;height:100%;object-fit:cover}
+.pg figure img.fit{object-fit:contain}
+.pg .arr{top:38%}
+.badges{display:flex;gap:6px}.badges span{background:var(--ink);color:#fff;padding:3px 8px;font-size:11px;font-weight:600}
+.badge-new{position:absolute;left:8px;top:8px;background:#fff;color:var(--ink);padding:3px 8px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;z-index:1}
+.copy p{max-width:none;margin-bottom:10px}.copy h4{margin:18px 0 6px;font-size:14px;font-weight:600}
+.look{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:auto auto;gap:6px}.look a{overflow:hidden;background:var(--tile)}.look img{width:100%;height:100%;object-fit:cover;aspect-ratio:16/9}.look a:first-child{grid-row:1/3}.look a:first-child img{aspect-ratio:auto}
+@media (max-width:900px){.look{grid-template-columns:1fr 1fr}.look a:first-child{grid-column:1/-1;grid-row:auto}}
+.thumbs{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;padding:8px 0 24px}
+.thumbs button{aspect-ratio:3/4;background:var(--tile);opacity:.75}
+.thumbs button:hover,.thumbs button:focus-visible{opacity:1;outline:1px solid var(--ink)}
+.thumbs img{width:100%;height:100%;object-fit:cover}.thumbs img.fit{object-fit:contain}
+@media (max-width:900px){.pg figure{flex-basis:100%}}
+.banner .ov{position:absolute;inset:0;padding:clamp(16px,3.4vw,48px);display:flex;flex-direction:column;justify-content:space-between;color:#fff;background:linear-gradient(90deg,rgba(0,0,0,.34),rgba(0,0,0,0) 60%)}
+.banner .mark{font-size:clamp(20px,3.4vw,44px);font-weight:500}
+.banner h1{font-size:clamp(24px,4.6vw,64px);font-weight:400;color:#fff}
+.banner .cap{color:#fff}
+.sec-t{text-align:center;font-size:clamp(20px,2.4vw,30px);font-weight:400;margin-bottom:clamp(20px,3vw,36px)}
+/* shapes */
+.shapes{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid var(--line)}
+.shape{display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:var(--gut);gap:16px}
+.shape + .shape{border-left:1px solid var(--line)}
+.shape .meta{display:flex;flex-direction:column;gap:10px}
+.dim{font-size:clamp(22px,3vw,34px);font-weight:300;font-variant-numeric:tabular-nums}
+
+/* grid */
+.gridhead{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:28px}
+.filters{display:flex;gap:18px}
+.filters button{padding:4px 0;border-bottom:1px solid transparent}
+.filters button[aria-pressed="true"]{border-bottom-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:36px 14px}
+.card{display:flex;flex-direction:column;gap:10px}
+.card .ph{position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--tile)}
+.card .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity .35s}
+.card .ph img.alt{opacity:0}
+.card:hover .ph img.alt,.card:focus-visible .ph img.alt{opacity:1}
+.card .nm{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.sku{font-variant-numeric:tabular-nums}
+
+/* try-on band */
+.band{background:var(--ink);color:var(--paper)}
+.band .in{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:clamp(40px,7vw,88px) var(--gut)}
+.band .tag{display:inline-flex;align-items:center;gap:8px;background:var(--service);color:var(--ink);padding:5px 10px}
+.band .btn{background:var(--service);color:var(--ink);border-color:var(--service)}
+.steps{display:grid;gap:0;counter-reset:s;border-top:1px solid #3a3835}
+.steps li{list-style:none;display:grid;grid-template-columns:44px 1fr;padding:16px 0;border-bottom:1px solid #3a3835;counter-increment:s}
+.steps li::before{content:counter(s,decimal-leading-zero);font-variant-numeric:tabular-nums;color:var(--service);font-size:12px;letter-spacing:.1em;padding-top:3px}
+.steps{margin:0;padding:0}
+.steps b{font-weight:500;display:block}
+.steps span{color:#B9B5AD}
+
+/* story */
+.story{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.story .ko{font-size:clamp(40px,7vw,96px);font-weight:400;line-height:1;letter-spacing:.42em;white-space:nowrap}
+
+/* product detail */
+.pd{display:grid;padding:clamp(12px,2vw,28px) var(--gut) 0;gap:clamp(16px,3vw,48px);grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:0;border-bottom:1px solid var(--line)}
+.gal{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--line)}
+.gal figure{margin:0;background:var(--tile);position:relative}
+.gal figure.wear{background:var(--panel)}
+.gal figure.wide{grid-column:1/-1}
+.gal figcaption{position:absolute;left:12px;bottom:10px}
+.info{padding:0 0 clamp(24px,4vw,48px) clamp(16px,3vw,48px);position:sticky;top:90px;align-self:start;display:flex;flex-direction:column;gap:22px}
+.chips{display:flex;gap:10px;flex-wrap:wrap}
+.chip{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);position:relative}
+.chip[aria-current="true"]{outline:1px solid var(--ink);outline-offset:3px}
+.spec{border-top:1px solid var(--line)}
+.spec div{display:grid;grid-template-columns:110px 1fr;padding:11px 0;border-bottom:1px solid var(--line);gap:12px}
+.spec dt{margin:0}.spec dd{margin:0;font-variant-numeric:tabular-nums}
+.note{font-size:12.5px;color:var(--ink-2)}
+.crumb{padding:16px var(--gut);border-bottom:1px solid var(--line);display:flex;gap:10px}
+
+/* bag drawer */
+.scrim{position:fixed;inset:0;background:rgba(25,24,22,.35);z-index:40;display:none}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--paper);z-index:41;transform:translateX(100%);transition:transform .3s;display:flex;flex-direction:column}
+.open .scrim{display:block}.open .drawer{transform:none}
+.drawer header{position:static;display:flex;justify-content:space-between;padding:20px;border-bottom:1px solid var(--line)}
+.drawer .items{flex:1;overflow:auto;padding:8px 20px}
+.item img{background:var(--tile)}
+.item{display:grid;grid-template-columns:72px 1fr auto;gap:14px;padding:14px 0;border-bottom:1px solid var(--line);align-items:center}
+.drawer .foot{padding:20px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:10px}
+.qty{display:flex;gap:10px;align-items:center;font-variant-numeric:tabular-nums}
+.qty button{width:24px;height:24px;border:1px solid var(--line)}
+
+footer{border-top:1px solid var(--line);padding:40px var(--gut);display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:32px}
+footer ul{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:6px}
+
+.page-h{padding:clamp(36px,6vw,72px) var(--gut) 0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+
+@media (max-width:900px){
+  .hero,.band .in,.story,.pd,.two{grid-template-columns:1fr}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .info{position:static}
+  .shapes{grid-template-columns:1fr}.shape + .shape{border-left:0;border-top:1px solid var(--line)}
+  footer{grid-template-columns:1fr}
+}
+@media (max-width:480px){.mark{font-size:20px}.head{padding-top:14px}.hero .pic{min-height:300px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="bar cap">Collection 01 preview · Online ordering opens at launch</div>
+<header>
+  <div class="head">
+    <a class="mark" href="#home" aria-label="NEOUL home">N<span class="e3"></span>OUL</a>
+  <nav class="cap" aria-label="Main">
+    <a href="#all" data-nav="all">All Products</a>
+    <a href="#shawl" data-nav="shawl">Shawl</a>
+    <a href="#bawal" data-nav="bawal">Bawal</a>
+    <a href="#try-on" data-nav="try-on" class="svc">Try On</a>
+    <a href="#concierge" data-nav="concierge">Concierge</a>
+    <button id="bagBtn" type="button" class="cap">Bag (<span id="bagN">0</span>)</button>
+  </nav>
+  </div>
+</header>
+
+<main id="view"></main>
+
+<footer>
+  <div>
+    <div class="mark" style="font-size:18px" role="img" aria-label="NEOUL">N<span class="e3"></span>OUL</div>
+    <p class="note" style="margin-top:14px">Modest scarves in stripe and dot. Seoul.<br>This is a preview of Collection 01. Checkout, shipping and stock are not connected yet.</p>
+  </div>
+  <div><div class="cap">Shop</div><ul><li><a href="#all">All Products</a></li><li><a href="#shawl">Shawl</a></li><li><a href="#bawal">Bawal</a></li></ul></div>
+  <div><div class="cap">Service</div><ul><li><a href="#try-on">Try On with Modestry On</a></li><li><a href="#concierge">Concierge</a></li><li class="note">NEOUL is a brand by COLOROUTE.</li></ul></div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Bag" aria-hidden="true">
+  <header><span class="cap">Your bag</span><button class="cap" id="bagClose" type="button">Close</button></header>
+  <div class="items" id="bagItems"></div>
+  <div class="foot">
+    <button class="btn cap" disabled type="button">Checkout opens at launch</button>
+    <p class="note">Your bag is saved on this screen only. No order is placed and no payment is taken.</p>
+  </div>
+</aside>
+
+<script>
+// Set this to the Modestry On demo address once it is published.
+const TRYON_URL = "https://claude.ai/artifact/4LeMvKbvi4cgbcAAcYiVRW";
+
+const STRIPE = {line:"0.2 cm (0.08 in) double pinstripes, 0.6 cm (0.24 in) apart", gap:"pairs every 2.8 cm (1.1 in), 25 pairs across the width"};
+const DOT = {line:"0.4 cm (0.15 in) dots", gap:"rows 1.3 cm (0.5 in) apart, 2.5 cm (1 in) within a row, staggered"};
+const P = [
+  {id:"sw-01", form:"shawl", pat:"Stripe", color:"Dark Brown",  chip:["#E7E3D7","#4B3B30"]},
+  {id:"sw-02", form:"shawl", pat:"Stripe", color:"Warm Taupe",  chip:["#E7E5D8","#9C8E7E"]},
+  {id:"sw-03", form:"shawl", pat:"Stripe", color:"Deep Olive",  chip:["#E3E2CE","#5C6145"]},
+  {id:"sw-04", form:"shawl", pat:"Stripe", color:"Near Black",  chip:["#EBECDE","#2B2A28"]},
+  {id:"bw-01", form:"bawal", pat:"Dot",    color:"Olive Greige",chip:["#999B83","#3B3D33"]},
+  {id:"bw-02", form:"bawal", pat:"Dot",    color:"Blue Gray",   chip:["#8C9B9E","#33393B"]},
+  {id:"bw-03", form:"bawal", pat:"Dot",    color:"Warm Sand Taupe", chip:["#A8977D","#3F372C"]},
+  {id:"bw-04", form:"bawal", pat:"Dot",    color:"Smoky Gray",  chip:["#858881","#2F302E"]}
+];
+const FORM = {
+  bawal:{label:"Bawal", size:"90 × 90 cm (35.4 × 35.4 in)", desc:"Square scarf"},
+  shawl:{label:"Shawl", size:"70 × 180 cm (27.6 × 70.9 in)", desc:"Long rectangular scarf"}
+};
+const name = p => `${p.color} ${p.pat} ${FORM[p.form].label}`;
+const img = (kind,p) => `img/${kind}-${p.id}.jpg`;
+const chipStyle = p => p.pat==="Stripe"
+  ? `background:repeating-linear-gradient(90deg,${p.chip[0]} 0 3px,${p.chip[1]} 3px 4px,${p.chip[0]} 4px 6px,${p.chip[1]} 6px 7px,${p.chip[0]} 7px 10px)`
+  : `background:radial-gradient(circle at 50% 50%,${p.chip[1]} 0 1.6px,transparent 2px) 0 0/9px 9px,${p.chip[0]}`;
+
+const bag = {};
+const $ = s => document.querySelector(s);
+const view = $("#view");
+
+function card(p){
+  return `<a class="card" href="#${p.id}">
+    <div class="ph"><span class="badge-new">New in</span><img src="img/look-${p.id}.jpg" alt="${name(p)} worn by a model"><img class="alt" src="img/model-${p.id}-1.jpg" alt=""></div>
+    <div class="nm"><span>${p.color} ${p.pat}</span><span class="cap muted sku">${p.id.toUpperCase()}</span></div>
+    <div class="cap muted">${FORM[p.form].label} · ${FORM[p.form].size}</div>
+  </a>`;
+}
+function grid(filter){
+  const list = P.filter(p => filter==="all" || p.form===filter);
+  return `<div class="grid">${list.map(card).join("")}</div>`;
+}
+function tryBand(){
+  return `<section class="band" style="padding:0"><div class="in">
+    <div style="display:flex;flex-direction:column;gap:22px">
+      <span class="tag cap" style="align-self:flex-start">Modestry On · Try-on service</span>
+      <h2>See the scarf on a face before you choose.</h2>
+      <p style="color:#B9B5AD">Modestry On is a hijab try-on service by COLOROUTE. Pick a prepared model photo, read the colour and face-shape guide, then switch between NEOUL scarves and ways to wear them.</p>
+      <div class="row"><a class="btn cap" href="#try-on">How Try On works</a></div>
+    </div>
+    <ol class="steps">
+      <li><div><b>Choose a model photo</b><span>Prepared photos for the event. No visitor faces are captured.</span></div></li>
+      <li><div><b>Read the guide</b><span>Personal colour and face shape, as styling help.</span></div></li>
+      <li><div><b>Try shapes, drapes and patterns</b><span>Shawl or bawal, dot or stripe.</span></div></li>
+      <li><div><b>Open the real product</b><span>Each look links to its NEOUL scarf.</span></div></li>
+    </ol>
+  </div></section>`;
+}
+
+const views = {
+  home(){
+    const N = 7, pad = n => String(n).padStart(2,"0");
+    return `<div class="banner" id="car" aria-roledescription="carousel">
+      ${Array.from({length:N},(_,i)=>`<a class="slide${i?"":" on"}" href="#all"><img src="img/hero-${pad(i+1)}.jpg" alt="NEOUL campaign image ${i+1}"><div class="ov"><div class="mark" aria-hidden="true">N<span class="e3"></span>OUL</div><div class="cap">Collection 01 · Stripe shawls, dot bawals</div></div></a>`).join("")}
+      <button class="arr l" type="button" data-car="-1" aria-label="Previous image">&#8592;</button><button class="arr r" type="button" data-car="1" aria-label="Next image">&#8594;</button>
+      <div class="dots">${Array.from({length:N},(_,i)=>`<button type="button" data-dot="${i}" aria-label="Image ${i+1}"${i?"":' aria-current="true"'}></button>`).join("")}</div>
+    </div>
+    <section class="wrap" style="padding-top:clamp(24px,4vw,48px)"><h2 class="sec-t">Available Now</h2>${grid("all")}</section>
+    <section class="wrap" style="padding-top:clamp(24px,4vw,56px)"><h2 class="sec-t">Lookbook · Collection 01</h2>
+      <div class="look">${[5,2,6,3,4].map(n=>`<a href="#all"><img src="img/hero-${String(n).padStart(2,"0")}.jpg" alt="NEOUL lookbook image"></a>`).join("")}</div></section>
+    ${tryBand()}
+    <section class="wrap" id="storyblock"><div class="story">
+      <div class="ko" aria-hidden="true">N<span class="e3"></span>OUL</div>
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <span class="cap muted">About NEOUL</span>
+        <h2>Named for the veil.</h2>
+        <p>NEOUL takes its name from an old word for a light veil worn when going out. We borrowed it for a modern modest label: quiet colour, small pattern, and fabric that is meant to be draped.</p>
+        <p class="muted">NEOUL is made by COLOROUTE, the team behind the Modestry On try-on service. We show every scarf in the try-on first, and use what people choose there to decide what we make next.</p>
+      </div>
+    </div></section>`;
+  },
+  list(filter){
+    const t = {all:["All Products","Eight scarves in Collection 01."],shawl:["Shawl","Long rectangle, 70 × 180 cm (27.6 × 70.9 in). Fine double stripes in four colours."],bawal:["Bawal","Square, 90 × 90 cm (35.4 × 35.4 in). Small dots in four colours."]}[filter];
+    return `<div class="page-h"><div class="gridhead"><div><h1 style="font-size:clamp(34px,5vw,60px)">${t[0]}</h1><p class="muted" style="margin-top:10px">${t[1]}</p></div>
+      <div class="filters cap">${["all","shawl","bawal"].map(f=>`<a href="#${f}"><button type="button" tabindex="-1" aria-pressed="${f===filter}">${f==="all"?"All":FORM[f].label}</button></a>`).join("")}</div></div></div>
+      <section class="wrap" style="padding-top:8px">${grid(filter)}</section>`;
+  },
+  product(p){
+    const f = FORM[p.form], st = p.pat==="Stripe"?STRIPE:DOT;
+    const sib = P.filter(x=>x.form===p.form);
+    const shots = [[`img/look-${p.id}.jpg`,`${name(p)}, campaign image`],[`img/model-${p.id}-1.jpg`,`${name(p)} worn by a model, full body`],[`img/model-${p.id}-2.jpg`,`${name(p)} worn by a model, second pose`],[`img/model-${p.id}-3.jpg`,`${name(p)} worn by a model, close-up`],
+                   [img("flat",p),`${name(p)}, whole scarf`,1],[img("fluid",p),`${name(p)}, fabric in folds`],[img("still",p),`${name(p)}, draped`]];
+    const sil = [1,2,3,4,5].map(i=>`<img src="img/tryon-${p.id}-${i}.webp" alt="">`).join("");
+    const tryHref = TRYON_URL ? `${TRYON_URL}#${p.id}` : "#try-on";
+    return `<div class="crumb cap muted"><a href="#all">All Products</a><span>/</span><a href="#${p.form}">${f.label}</a><span>/</span><span style="color:var(--ink)">${p.color}</span></div>
+    <div class="pd">
+      <div class="pg">
+        <div class="track" id="pgTrack" tabindex="0" aria-label="Product images">${shots.map(s=>`<figure><img src="${s[0]}" alt="${s[1]}"${s[2]?' class="fit"':""}></figure>`).join("")}</div>
+        <button class="arr l" type="button" data-pg="-1" aria-label="Previous image">&#8592;</button><button class="arr r" type="button" data-pg="1" aria-label="Next image">&#8594;</button>
+        <div class="thumbs">${shots.map((s,i)=>`<button type="button" data-th="${i}" aria-label="Show image ${i+1}"><img src="${s[0]}" alt=""${s[2]?' class="fit"':""}></button>`).join("")}</div>
+      </div>
+      <div class="info">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div class="badges"><span>Preview</span><span>${f.label}s</span></div>
+          <h1 style="font-size:clamp(22px,2.2vw,30px);font-weight:500">${p.pat} ${f.label} ${p.color}</h1>
+          <span class="muted">${f.desc}, ${f.size}</span>
+        </div>
+        <div><div class="cap muted" style="margin-bottom:10px">Colour: ${p.color}</div>
+          <div class="chips">${sib.map(x=>`<a class="chip" href="#${x.id}" title="${x.color}" aria-label="${x.color}" aria-current="${x.id===p.id}" style="${chipStyle(x)}"></a>`).join("")}</div></div>
+        <div class="tp">
+          <div class="sil" aria-hidden="true">${sil}</div>
+          <a class="btn trybtn" href="${tryHref}" target="_blank" rel="noopener" aria-label="Try on with Modestry On"><span class="cap">Try on</span><span class="mo">with <img class="molog" src="img/modestry-on-logo.png" alt="Modestry On" onerror="this.outerHTML='<b>Modestry <i class=o></i>n</b>'"></span></a>
+          <button class="btn cap" type="button" data-add="${p.id}">Add to bag</button>
+        </div>
+        <div class="copy">
+          <p><b>${p.pat.toUpperCase()}</b> ${f.label.toLowerCase()} from Collection 01. ${p.pat==="Stripe"?"Fine double pinstripes run the full length of the scarf, so the lines fall straight when one end hangs and curve softly where it wraps.":"Small dots sit in staggered rows on a solid ground, quiet from a distance and graphic up close."}</p>
+          <h4>Fabric</h4><p>Opaque satin with a soft sheen. Does not show through.</p><h4>Size</h4><p>${f.size}. ${p.form==="shawl"?"Wraps once around the head with one end reaching the hip.":"Folds on the diagonal; drapes over both shoulders and covers the chest, with the back point reaching mid-back."}</p>
+          <h4>Pattern</h4><p>${st.line}, ${st.gap}.</p>
+          <h4>Material and care</h4><p class="muted">Listed when the collection launches.</p>
+          <h4>Price</h4><p class="muted">Announced at launch. Ordering is not open yet.</p>
+          <h4>About the images</h4><p class="muted">Model and fabric images are AI-generated concept visuals. Patterns are applied at the real print scale.</p>
+        </div>
+      </div>
+    </div>
+    <section class="wrap"><h2 class="sec-t">You may also like</h2><div class="grid">${sib.filter(x=>x.id!==p.id).map(card).join("")}</div></section>`;
+  },
+  tryon(){
+    const cta = TRYON_URL ? `<a class="btn cap" style="background:var(--service);border-color:var(--ink);color:var(--ink)" href="${TRYON_URL}" target="_blank" rel="noopener">Open Modestry On</a>` : `<span class="cap muted">The try-on runs on the iPad at our table.</span>`;
+    return `<div class="page-h two" style="padding-bottom:clamp(36px,6vw,72px)">
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <span class="cap" style="align-self:flex-start;background:var(--service);padding:5px 10px">Modestry On · Try-on service</span>
+        <h1 style="font-size:clamp(34px,5vw,64px)">Try the scarf on before you choose.</h1>
+        <p>Modestry On is a separate service from NEOUL, built by the same company, COLOROUTE. It shows how a hijab's shape, drape, colour and pattern sit around a face, then takes you to the real product.</p>
+        <div class="row" style="align-items:center">${cta}<a class="btn ghost cap" href="#all">Back to the collection</a></div>
+      </div>
+      <div style="background:var(--panel);display:grid;grid-template-columns:1fr 1fr 1fr;align-items:end;padding:16px 8px 0"><img src="img/tryon-shawl-1.webp" alt="Shawl silhouette"><img src="img/tryon-shawl-3.webp" alt="Shawl silhouette"><img src="img/tryon-shawl-5.webp" alt="Shawl silhouette"></div>
+    </div>
+    ${tryBand().replace('<div class="row"><a class="btn cap" href="#try-on">How Try On works</a></div>','')}
+    <section class="wrap"><div class="two">
+      <div style="display:flex;flex-direction:column;gap:14px"><h2>What the event demo does</h2><p>The demo uses prepared model photos and prepared drapes of our fabrics. The colour and face-shape guide describes the model in the photo. It is a styling guide, not a rule, and not a reading of the visitor.</p></div>
+      <div style="display:flex;flex-direction:column;gap:14px"><h2>What comes next</h2><p>Try-on with your own photo, more drapes for each shape, and every NEOUL colour in every drape. We will say so here when each part is live.</p></div>
+    </div></section>`;
+  },
+  concierge(){
+    return `<div class="page-h" style="padding-bottom:clamp(60px,10vw,140px);display:flex;flex-direction:column;gap:18px">
+      <span class="cap muted">Concierge</span>
+      <h1 style="font-size:clamp(34px,5vw,64px)">Opening after launch.</h1>
+      <p>Concierge is not open yet. Until then, the Try On guide is the quickest way to find a colour and a way to wear it.</p>
+      <div class="row"><a class="btn cap" href="#try-on">Go to Try On</a></div>
+    </div>`;
+  }
+};
+
+function render(){
+  let h = (location.hash||"#home").slice(1);
+  let html, nav = "";
+  const p = P.find(x=>x.id===h);
+  if(p){ html = views.product(p); nav = p.form; }
+  else if(h==="all"||h==="shawl"||h==="bawal"){ html = views.list(h); nav = h; }
+  else if(h==="try-on"){ html = views.tryon(); nav = h; }
+  else if(h==="concierge"){ html = views.concierge(); nav = h; }
+  else { html = views.home(); }
+  view.innerHTML = html;
+  document.querySelectorAll("nav a").forEach(a => a.dataset.nav===nav ? a.setAttribute("aria-current","page") : a.removeAttribute("aria-current"));
+  if(h==="story"){ const s=$("#storyblock"); if(s) s.scrollIntoView(); } else { window.scrollTo(0,0); }
+}
+function renderBag(){
+  const ids = Object.keys(bag);
+  $("#bagN").textContent = ids.reduce((a,k)=>a+bag[k],0);
+  $("#bagItems").innerHTML = ids.length ? ids.map(id=>{const p=P.find(x=>x.id===id);return `<div class="item"><img src="${img("flat",p)}" alt=""><div><div>${p.color} ${p.pat}</div><div class="cap muted">${FORM[p.form].label} · ${FORM[p.form].size}</div></div><div class="qty"><button type="button" data-dec="${id}" aria-label="Remove one">−</button><span>${bag[id]}</span><button type="button" data-add="${id}" aria-label="Add one">+</button></div></div>`}).join("") : `<p class="muted" style="padding:20px 0">Your bag is empty.</p>`;
+}
+function openBag(o){ document.body.classList.toggle("open",o); $("#drawer").setAttribute("aria-hidden",String(!o)); }
+document.addEventListener("click",e=>{
+  const a = e.target.closest("[data-add]"), d = e.target.closest("[data-dec]");
+  if(a){ bag[a.dataset.add]=(bag[a.dataset.add]||0)+1; renderBag(); openBag(true); }
+  if(d){ const k=d.dataset.dec; bag[k]--; if(bag[k]<=0) delete bag[k]; renderBag(); }
+});
+$("#bagBtn").addEventListener("click",()=>openBag(true));
+$("#bagClose").addEventListener("click",()=>openBag(false));
+$("#scrim").addEventListener("click",()=>openBag(false));
+document.addEventListener("keydown",e=>{ if(e.key==="Escape") openBag(false); });
+let carI=0;
+function carGo(i){const sl=document.querySelectorAll("#car .slide"); if(!sl.length) return; carI=(i+sl.length)%sl.length; sl.forEach((e,k)=>e.classList.toggle("on",k===carI)); document.querySelectorAll("#car .dots button").forEach((e,k)=>k===carI?e.setAttribute("aria-current","true"):e.removeAttribute("aria-current"));}
+document.addEventListener("click",e=>{const h=e.target.closest("[data-th]"); if(h){const t=document.getElementById("pgTrack"); const f=t.querySelectorAll("figure")[+h.dataset.th]; t.scrollTo({left:f.offsetLeft-t.offsetLeft,behavior:"smooth"});}});
+document.addEventListener("click",e=>{const g=e.target.closest("[data-pg]"); if(g){const t=document.getElementById("pgTrack"); const w=t.querySelector("figure").getBoundingClientRect().width+2; const max=t.scrollWidth-t.clientWidth; let x=t.scrollLeft+ +g.dataset.pg*w; if(x>max+4) x=0; if(x<-4) x=max; t.scrollTo({left:x,behavior:"smooth"});}});
+document.addEventListener("click",e=>{const a=e.target.closest("[data-car]"),d=e.target.closest("[data-dot]"); if(a) carGo(carI+ +a.dataset.car); if(d) carGo(+d.dataset.dot);});
+if(!matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(()=>{ if(!document.querySelector("#car:hover")) carGo(carI+1); },6000);
+window.addEventListener("hashchange",()=>{carI=0;render();});
+/* Demo auto-tour: home → shawl → bawal → try-on, 5 s each. Pauses 15 s after any click/key/scroll. Add ?tour=0 to the URL to turn it off. */
+const TOUR=["home","shawl","bawal","try-on"]; let tourI=0, tourPause=0;
+if(new URLSearchParams(location.search).get("tour")!=="0"){
+  ["click","keydown","wheel","touchstart"].forEach(ev=>addEventListener(ev,()=>{tourPause=Date.now()+15000;},{passive:true}));
+  setInterval(()=>{ if(Date.now()<tourPause) return; tourI=(tourI+1)%TOUR.length; location.hash="#"+TOUR[tourI]; scrollTo({top:0}); },5000);
+}
+render(); renderBag();
+</script>
+</body>
+</html>
