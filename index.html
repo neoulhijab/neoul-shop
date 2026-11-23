@@ -36,7 +36,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .bar{background:var(--ink);color:var(--paper);text-align:center;padding:8px var(--gut)}
 header{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--line)}
 .head{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:18px var(--gut);flex-wrap:wrap}
-.brands{display:flex;align-items:center;gap:14px}.brands .x{font-size:16px;color:var(--ink-2);line-height:1}.molink{display:flex;align-items:center}.molink img{height:30px;width:auto;display:block}
+.brands{display:flex;align-items:center;gap:14px}.brands .x{font-size:16px;color:var(--ink-2);line-height:1}.molink{display:flex;align-items:center}.molink img{height:36px;width:auto;display:block}
 .mark{font-size:24px;font-weight:500;letter-spacing:.42em;margin-right:-.42em;line-height:1}
 .e3{--t:.098em;display:inline-block;width:.5em;height:.7em;margin-right:.42em;background:linear-gradient(180deg,currentColor 0 var(--t),transparent var(--t) calc(50% - var(--t)/2),currentColor calc(50% - var(--t)/2) calc(50% + var(--t)/2),transparent calc(50% + var(--t)/2) calc(100% - var(--t)),currentColor calc(100% - var(--t)))}
 .story .ko .e3,.banner .e3{--t:.098em}
@@ -81,11 +81,11 @@ p{margin:0;max-width:62ch}
 .dots button[aria-current="true"]{background:#fff}
 .tp{display:flex;flex-direction:column;gap:10px}
 .tp .sil{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
-.tp .btn{height:56px;width:100%}
+.tp .btn{height:56px;width:100%}.tp .trybtn{height:auto;padding:12px 0}
 .trybtn{flex-direction:column;gap:3px;background:#fff;color:var(--ink)}
 .trybtn .cap{font-size:12px;font-weight:600}
 .mo{font-size:12px;color:var(--ink-2);display:inline-flex;align-items:center;gap:5px}
-.mo .molog{height:24px;width:auto;display:block}
+.mo .molog{height:34px;width:auto;display:block}
 .mo b{font-weight:600;color:var(--ink);letter-spacing:-.01em;font-size:13.5px;display:inline-flex;align-items:center}
 .mo .o{display:inline-block;width:.78em;height:.78em;border:.17em solid currentColor;border-radius:50%;margin:0 .05em 0 .22em;position:relative;top:.02em}
 .pg{position:relative;min-width:0}
@@ -189,7 +189,7 @@ footer ul{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:6px}
   .shapes{grid-template-columns:1fr}.shape + .shape{border-left:0;border-top:1px solid var(--line)}
   footer{grid-template-columns:1fr}
 }
-@media (max-width:480px){.mark{font-size:20px}.molink img{height:24px}.brands{gap:10px}.head{padding-top:14px}.hero .pic{min-height:300px}}
+@media (max-width:480px){.mark{font-size:20px}.molink img{height:26px}.brands{gap:10px}.head{padding-top:14px}.hero .pic{min-height:300px}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
